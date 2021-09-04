@@ -1,6 +1,7 @@
-import React from "react";
-import EnterButtons from "./components/enterButtons";
-import Operators from "./components/operators";
+import React, { useState } from "react";
+
+import Screen from "./components/screen";
+import AllButtons from "./components/allButtons";
 
 function App() {
     const blockOfCharacters = [
@@ -10,20 +11,65 @@ function App() {
         ["0", ".", "AC"]
     ];
     const blockOperators = ["+", "-", "*", "/"];
+    const [display, setDisplay] = useState("0");
+    const [firstOp, setFirstOp] = useState("0");
+    const [secondOp, setSecondOp] = useState("0");
+    const [operation, setOperation] = useState(null);
+    const methods = {
+        "+": () => {
+            setFirstOp(display);
+            setOperation(() => (a, b) => {
+                console.log(`${a} + ${b}:`, a + b);
+                return a + b;
+            });
+            setDisplay("");
+        },
+        "-": () => {
+            setFirstOp(display);
+            setOperation(() => (a, b) => a - b);
+            setDisplay("");
+        },
+        "*": () => {
+            setFirstOp(display);
+            setOperation(() => (a, b) => a * b);
+            setDisplay("");
+        },
+        "/": () => {
+            setFirstOp(display);
+            setOperation(() => (a, b) => a / b);
+            setDisplay("");
+        }
+    };
+    const handleButton = (buttonValue) => {
+        if (display === "0" && buttonValue !== ".") {
+            setDisplay(`${buttonValue}`);
+            return;
+        }
+        setDisplay(`${display + buttonValue}`);
+    };
+
+    const handleCalculate = (op) => {
+        setOperation(methods[op]);
+        console.log("operation:", operation);
+    };
+    const handleAnswer = () => {
+        console.log("operation:", operation);
+        console.log("display:", display);
+        setSecondOp(display);
+        console.log("secondOp:", secondOp);
+        console.log("firstOp:", firstOp);
+        setDisplay(operation(Number(firstOp), Number(secondOp)).toString());
+    };
     return (
         <div className="calculator">
-            <div className="input">0</div>
-            <div className="buttons">
-                <div className="operators">
-                    <Operators operators={blockOperators} />
-                </div>
-                <div className="leftPanel">
-                    {blockOfCharacters.map((characters, i) => (
-                        <EnterButtons key={i} characters={characters} />
-                    ))}
-                </div>
-                <div className="equal">=</div>
-            </div>
+            <Screen display={display} />
+            <AllButtons
+                blockOfCharacters={blockOfCharacters}
+                blockOperators={blockOperators}
+                onButton={handleButton}
+                onCalculate={handleCalculate}
+                onAnswer={handleAnswer}
+            />
         </div>
     );
 }
