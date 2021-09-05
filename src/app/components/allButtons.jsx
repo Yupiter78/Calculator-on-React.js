@@ -9,6 +9,7 @@ const AllButtons = ({
     blockOfCharacters,
     onButton,
     onCalculate,
+    onFixedValue,
     onAnswer
 }) => {
     return (
@@ -28,7 +29,7 @@ const AllButtons = ({
                     />
                 ))}
             </div>
-            <Equal onAnswer={onAnswer} />
+            <Equal onAnswer={onAnswer} onFixedValue={onFixedValue} />
         </div>
     );
 };
@@ -38,6 +39,7 @@ AllButtons.propTypes = {
     blockOfCharacters: PropTypes.array.isRequired,
     onButton: PropTypes.func.isRequired,
     onCalculate: PropTypes.func.isRequired,
+    onFixedValue: PropTypes.func.isRequired,
     onAnswer: PropTypes.func.isRequired
 };
 

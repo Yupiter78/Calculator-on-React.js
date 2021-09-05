@@ -12,8 +12,8 @@ function App() {
     ];
     const blockOperators = ["+", "-", "*", "/"];
     const [display, setDisplay] = useState("0");
-    const [firstOp, setFirstOp] = useState("0");
-    const [secondOp, setSecondOp] = useState("0");
+    const [firstOp, setFirstOp] = useState("");
+    const [secondOp, setSecondOp] = useState("");
     const [operation, setOperation] = useState(null);
     const methods = {
         "+": () => {
@@ -22,43 +22,61 @@ function App() {
                 console.log(`${a} + ${b}:`, a + b);
                 return a + b;
             });
-            setDisplay("");
+            setSecondOp("");
+            setDisplay("+");
         },
         "-": () => {
             setFirstOp(display);
             setOperation(() => (a, b) => a - b);
-            setDisplay("");
+            setDisplay("-");
         },
         "*": () => {
             setFirstOp(display);
             setOperation(() => (a, b) => a * b);
-            setDisplay("");
+            setDisplay("*");
         },
         "/": () => {
             setFirstOp(display);
             setOperation(() => (a, b) => a / b);
-            setDisplay("");
+            setDisplay("/");
         }
     };
     const handleButton = (buttonValue) => {
-        if (display === "0" && buttonValue !== ".") {
+        console.log("display____handleButton:", display);
+        console.log("buttonValue:", buttonValue);
+        if (
+            (display === "0" && buttonValue !== ".") ||
+            blockOperators.includes(display)
+        ) {
             setDisplay(`${buttonValue}`);
-            return;
+        } else {
+            setDisplay(`${display + buttonValue}`);
         }
-        setDisplay(`${display + buttonValue}`);
     };
 
     const handleCalculate = (op) => {
         setOperation(methods[op]);
         console.log("operation:", operation);
     };
-    const handleAnswer = () => {
+    const handleFixedValue = () => {
+        console.log("secondOp__handleFixedValue__1:", secondOp);
         console.log("operation:", operation);
         console.log("display:", display);
-        setSecondOp(display);
-        console.log("secondOp:", secondOp);
-        console.log("firstOp:", firstOp);
+        if (!secondOp) {
+            setSecondOp(display);
+        }
+        console.log("secondOp__handleFixedValue__2:", secondOp);
+        console.log("firstOp__handleFixedValue:", firstOp);
+    };
+    const handleAnswer = () => {
+        console.log("secondOp__handleAnswer:", secondOp);
+        console.log("firstOp--handleAnswer:", firstOp);
+        console.log("!firstOp || !secondOp:", !firstOp || !secondOp);
+        if (!firstOp) return;
+
         setDisplay(operation(Number(firstOp), Number(secondOp)).toString());
+        console.log("display__handleAnswer:", display);
+        setFirstOp(operation(Number(firstOp), Number(secondOp)).toString());
     };
     return (
         <div className="calculator">
@@ -68,6 +86,7 @@ function App() {
                 blockOperators={blockOperators}
                 onButton={handleButton}
                 onCalculate={handleCalculate}
+                onFixedValue={handleFixedValue}
                 onAnswer={handleAnswer}
             />
         </div>

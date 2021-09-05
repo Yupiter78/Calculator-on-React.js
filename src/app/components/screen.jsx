@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const Screen = ({ display }) => {
-    console.log("display:", display);
     return <div className="input">{display}</div>;
 };
 
