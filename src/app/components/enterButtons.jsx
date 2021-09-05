@@ -1,19 +1,34 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const EnterButtons = ({ characters, onButton }) => {
+const EnterButtons = ({ characters, onButtonDown, onButtonUp, onReset }) => {
     return (
         <>
             <div className="numbers">
-                {characters.map((character) => (
-                    <div
-                        key={character}
-                        id={character}
-                        onClick={() => onButton(character)}
-                    >
-                        {character}
-                    </div>
-                ))}
+                {characters.map((character) => {
+                    if (character !== "AC") {
+                        return (
+                            <div
+                                key={character}
+                                id={character}
+                                onMouseDown={() => onButtonDown(character)}
+                                onClick={() => onButtonUp(character)}
+                            >
+                                {character}
+                            </div>
+                        );
+                    } else {
+                        return (
+                            <div
+                                key={character}
+                                id={character}
+                                onClick={onReset}
+                            >
+                                {character}
+                            </div>
+                        );
+                    }
+                })}
             </div>
         </>
     );
@@ -21,7 +36,9 @@ const EnterButtons = ({ characters, onButton }) => {
 
 EnterButtons.propTypes = {
     characters: PropTypes.array.isRequired,
-    onButton: PropTypes.func.isRequired
+    onButtonDown: PropTypes.func.isRequired,
+    onButtonUp: PropTypes.func.isRequired,
+    onReset: PropTypes.func.isRequired
 };
 
 export default EnterButtons;

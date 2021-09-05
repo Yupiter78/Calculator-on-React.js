@@ -7,10 +7,12 @@ import PropTypes from "prop-types";
 const AllButtons = ({
     blockOperators,
     blockOfCharacters,
-    onButton,
+    onButtonDown,
+    onButtonUp,
     onCalculate,
     onFixedValue,
-    onAnswer
+    onAnswer,
+    onReset
 }) => {
     return (
         <div className="buttons">
@@ -25,7 +27,9 @@ const AllButtons = ({
                     <EnterButtons
                         key={i}
                         characters={characters}
-                        onButton={onButton}
+                        onButtonDown={onButtonDown}
+                        onButtonUp={onButtonUp}
+                        onReset={onReset}
                     />
                 ))}
             </div>
@@ -37,10 +41,12 @@ const AllButtons = ({
 AllButtons.propTypes = {
     blockOperators: PropTypes.array.isRequired,
     blockOfCharacters: PropTypes.array.isRequired,
-    onButton: PropTypes.func.isRequired,
+    onButtonDown: PropTypes.func.isRequired,
+    onButtonUp: PropTypes.func.isRequired,
     onCalculate: PropTypes.func.isRequired,
     onFixedValue: PropTypes.func.isRequired,
-    onAnswer: PropTypes.func.isRequired
+    onAnswer: PropTypes.func.isRequired,
+    onReset: PropTypes.func.isRequired
 };
 
 export default AllButtons;
