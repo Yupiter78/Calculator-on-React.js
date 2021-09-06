@@ -15,12 +15,25 @@ function App() {
     const [firstOp, setFirstOp] = useState("");
     const [secondOp, setSecondOp] = useState("");
     const [operation, setOperation] = useState(null);
+    const [result, setResult] = useState("");
     const methods = {
         "+": () => {
-            setFirstOp(display);
             setOperation(() => (a, b) => a + b);
-            setSecondOp("");
-            setDisplay("+");
+            if (secondOp) {
+                console.log("Working IF");
+                console.log("firstOp:", firstOp);
+                console.log("secondOp:", secondOp);
+                handleEqualUp();
+                setSecondOp("");
+                setDisplay("+");
+            } else {
+                console.log("Working ELSE");
+                console.log("firstOp:", firstOp);
+                console.log("secondOp:", secondOp);
+
+                // setSecondOp("");
+                setDisplay("+");
+            }
         },
         "-": () => {
             setFirstOp(display);
@@ -43,13 +56,16 @@ function App() {
     };
 
     const handleButtonDown = (buttonValue) => {
+        if (secondOp) {
+            setDisplay("");
+        }
+        if (display.includes(".") && buttonValue === ".") return;
         if (buttonValue === ".") {
             setDisplay("0");
         }
     };
 
     const handleButtonUp = (buttonValue) => {
-        if (display.length > 8) return;
         if (display.includes(".") && buttonValue === ".") return;
         if (
             (display === "0" && buttonValue !== ".") ||
@@ -61,26 +77,35 @@ function App() {
         }
     };
 
-    const handleCalculate = (op) => {
+    const handleOperationUp = (op) => {
         if (!operation || secondOp) {
+            console.log("WORKING");
             setOperation(methods[op]);
         }
     };
-    const handleFixedValue = () => {
-        if (!secondOp) {
+
+    const handleOperationDown = () => {
+        if (!firstOp) {
+            setFirstOp(display);
+        }
+        if (firstOp && !secondOp) {
             setSecondOp(display);
         }
     };
-    const handleAnswer = () => {
+
+    const handleEqualDown = () => {
+        if (firstOp && !secondOp) {
+            setSecondOp(display);
+        }
+    };
+    const handleEqualUp = () => {
         if (!firstOp) return;
-        let result = operation(Number(firstOp), Number(secondOp))
+        const resultExp = operation(Number(firstOp), Number(secondOp))
             .toFixed(8)
             .replace(/[,.]?0+$/, "");
-        if (result.length > 18) {
-            result = "ERROR";
-        }
-        setDisplay(result);
-        setFirstOp(result);
+        setDisplay(resultExp);
+        setFirstOp(resultExp);
+        setResult(resultExp);
     };
 
     const handleReset = () => {
@@ -88,18 +113,20 @@ function App() {
         setOperation(null);
         setSecondOp("");
         setDisplay("0");
+        setResult("");
     };
     return (
         <div className="calculator">
-            <Screen display={display} />
+            <Screen display={display} result={result} />
             <AllButtons
                 blockOfCharacters={blockOfCharacters}
                 blockOperators={blockOperators}
+                onSecondOpValue={handleOperationDown}
                 onButtonDown={handleButtonDown}
                 onButtonUp={handleButtonUp}
-                onCalculate={handleCalculate}
-                onFixedValue={handleFixedValue}
-                onAnswer={handleAnswer}
+                onCalculate={handleOperationUp}
+                onFixedValue={handleEqualDown}
+                onAnswer={handleEqualUp}
                 onReset={handleReset}
             />
         </div>

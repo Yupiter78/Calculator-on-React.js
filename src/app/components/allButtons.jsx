@@ -10,6 +10,7 @@ const AllButtons = ({
     onButtonDown,
     onButtonUp,
     onCalculate,
+    onSecondOpValue,
     onFixedValue,
     onAnswer,
     onReset
@@ -20,6 +21,7 @@ const AllButtons = ({
                 <Operators
                     operators={blockOperators}
                     onCalculate={onCalculate}
+                    onSecondOpValue={onSecondOpValue}
                 />
             </div>
             <div className="leftPanel">
@@ -44,6 +46,7 @@ AllButtons.propTypes = {
     onButtonDown: PropTypes.func.isRequired,
     onButtonUp: PropTypes.func.isRequired,
     onCalculate: PropTypes.func.isRequired,
+    onSecondOpValue: PropTypes.func.isRequired,
     onFixedValue: PropTypes.func.isRequired,
     onAnswer: PropTypes.func.isRequired,
     onReset: PropTypes.func.isRequired
