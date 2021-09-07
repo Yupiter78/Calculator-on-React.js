@@ -12,7 +12,7 @@ const EnterButtons = ({ characters, onButtonDown, onButtonUp, onReset }) => {
                                 key={character}
                                 id={character}
                                 onMouseDown={() => onButtonDown(character)}
-                                onClick={() => onButtonUp(character)}
+                                onClick={onButtonUp}
                             >
                                 {character}
                             </div>
