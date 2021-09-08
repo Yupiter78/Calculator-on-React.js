@@ -77,10 +77,6 @@ function App() {
         setState(true);
 
         if (!!firstOp && !!secondOp) {
-            console.log("Need to apply the equal__1");
-            // handleFixedValue();
-
-            console.log("Need to apply the equal__2");
             let resultExp = operation(Number(firstOp), Number(secondOp))
                 .toFixed(8)
                 .replace(/[,.]?0+$/, "");
@@ -88,7 +84,6 @@ function App() {
                 resultExp = "ERROR";
             }
             setResult(resultExp);
-
             setFirstOp(resultExp);
         }
     };
@@ -100,22 +95,19 @@ function App() {
     };
 
     const handleAnswer = () => {
-        console.log("_______________");
-        console.log(`${Number(firstOp)}, ${Number(secondOp)}`);
-        let resultExp = operation(Number(firstOp), Number(secondOp))
-            .toFixed(8)
-            .replace(/[,.]?0+$/, "");
-        if (resultExp.length > 18) {
-            resultExp = "ERROR";
+        if (firstOp && operation) {
+            let resultExp = operation(Number(firstOp), Number(secondOp))
+                .toFixed(8)
+                .replace(/[,.]?0+$/, "");
+            if (resultExp.length > 18) {
+                resultExp = "ERROR";
+            }
+            setResult(resultExp);
+            setDisplay(resultExp);
+
+            setState(false);
+            setFirstOp("");
         }
-        setResult(resultExp);
-        setDisplay(resultExp);
-
-        setState(false);
-        setFirstOp("");
-
-        console.log("firstOp___Answer:", firstOp);
-        console.log("result___Answer:", result);
     };
 
     const handleReset = () => {
