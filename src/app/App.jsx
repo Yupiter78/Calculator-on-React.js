@@ -11,12 +11,12 @@ function App() {
         ["0", ".", "AC"]
     ];
     const blockOperators = ["+", "-", "*", "/"];
-    const [display, setDisplay] = useState("0");
-    const [firstOp, setFirstOp] = useState("");
-    const [secondOp, setSecondOp] = useState("");
-    const [operation, setOperation] = useState(null);
-    const [state, setState] = useState(false);
-    const [result, setResult] = useState("");
+    const [display, setDisplay] = useState("0"); // отображение на экране
+    const [firstOp, setFirstOp] = useState(""); // первое введённое число
+    const [secondOp, setSecondOp] = useState(""); // второе введённое число
+    const [operation, setOperation] = useState(null); // введённый оператор
+    const [state, setState] = useState(false); // сосотояние, определяющее в какой из операндов будет записываться вводимые числа
+    const [result, setResult] = useState(""); // результат
     const methods = {
         "+": () => {
             setOperation(() => (a, b) => a + b);
@@ -41,6 +41,7 @@ function App() {
     };
 
     const handleButtonDown = (buttonValue) => {
+        console.log("buttonValue:", buttonValue);
         if (display.length > 8) return;
         if (display.includes(".") && buttonValue === ".") return;
         if (state) {
@@ -50,6 +51,9 @@ function App() {
                     : setSecondOp(buttonValue);
             } else {
                 setSecondOp(secondOp + buttonValue);
+                // setSecondOp((prev) => prev + buttonValue);
+
+                console.log("secondOp:", secondOp);
             }
         } else {
             if (!firstOp) {
@@ -62,7 +66,8 @@ function App() {
         }
     };
 
-    const handleButtonUp = () => {
+    const handleButtonUp = ({ target }) => {
+        console.log("target.innerText:", target.innerText);
         if (!state) {
             setDisplay(firstOp);
         } else {
@@ -71,9 +76,10 @@ function App() {
     };
 
     const handleOperationUp = (op) => {
-        if (!operation || secondOp) {
-            setOperation(methods[op]);
-        }
+        console.log("operation__2:", operation);
+        console.log("secondOp:", secondOp);
+        setOperation(methods[op]);
+
         setState(true);
 
         if (!!firstOp && !!secondOp) {
