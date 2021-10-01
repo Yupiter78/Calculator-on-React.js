@@ -42,7 +42,7 @@ function App() {
 
     const handleButtonDown = (buttonValue) => {
         console.log("buttonValue:", buttonValue);
-        if (display.length > 8) return;
+        if (display.length > 10) return;
         if (display.includes(".") && buttonValue === ".") return;
         if (state) {
             if (!secondOp) {
@@ -102,11 +102,11 @@ function App() {
             setResult(resultExp);
             setFirstOp(resultExp);
         }
-        // console.log("result__OP__UP:", result);
-        // console.log("operation__OP__UP:", operation);
-        // console.log("firstOp__OP__UP:", firstOp);
-        // console.log("secondOp__OP__UP:", secondOp);
-        // console.log("______________________________________________");
+        console.log("result__OP__UP:", result);
+        console.log("operation__OP__UP:", operation);
+        console.log("firstOp__OP__UP:", firstOp);
+        console.log("secondOp__OP__UP:", secondOp);
+        console.log("______________________________________________");
     };
 
     // useEffect(() => {
@@ -126,18 +126,34 @@ function App() {
         if (!firstOp && result) {
             setFirstOp(result);
         }
+
         console.log("result__EQUAL__DOWN:", result);
         console.log("operation__EQUAL__DOWN:", operation);
+        console.log("JSON__2:", JSON.stringify(operation));
         console.log("firstOp__EQUAL__DOWN:", firstOp);
         console.log("secondOp__EQUAL__DOWN:", secondOp);
         console.log("______________________________________________");
     };
+
     useEffect(() => {
+        console.log("display__EQUAL__DOWN___useEffect:", display);
         console.log("firstOp__EQUAL__DOWN___useEffect:", firstOp);
+        console.log("result__EQUAL__DOWN___useEffect:", result);
+        console.log("operation__EQUAL__DOWN___useEffect:", operation);
+        console.log("secondOp__EQUAL__DOWN___useEffect:", secondOp);
+        console.log("state__EQUALDOWN___useEffect:", state);
         console.log("************useEffect*****************");
     }, [firstOp]);
 
     const handleEqualAnswer = () => {
+        if (operation?.toString() === "(a, b) => a / b" && secondOp === "0") {
+            setDisplay("impossible");
+            setState(false);
+            setFirstOp("");
+            setSecondOp("");
+            setOperation(null);
+            return;
+        }
         if (firstOp && operation) {
             let resultExp = operation(Number(firstOp), Number(secondOp))
                 .toFixed(8)
@@ -163,6 +179,7 @@ function App() {
         console.log("operation__useEffect:", operation);
         console.log("firstOp__useEffect:", firstOp);
         console.log("secondOp__useEffect:", secondOp);
+        console.log("state__EQUAL__UP:", state);
         console.log("______________________________________________");
     }, [result]);
 
