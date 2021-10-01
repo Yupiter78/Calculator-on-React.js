@@ -73,16 +73,21 @@ function App() {
         } else {
             setDisplay(secondOp);
         }
+        console.log("firstOp__DISPLAY:", firstOp);
+        console.log("secondOp__DISPLAY:", secondOp);
+        console.log("operation__DISPLAY:", operation);
     };
 
-    const handleOperationUp = (op) => {
-        console.log("operation__2:", operation);
-        console.log("secondOp:", secondOp);
-        setOperation(methods[op]);
+    const handleOperationDown = (op) => {
+        if (firstOp) {
+            console.log("operation__OP:", operation);
+            console.log("firstOp__OP:", firstOp);
+            console.log("secondOp__OP:", secondOp);
+            setOperation(methods[op]);
+            setState(true);
+        }
 
-        setState(true);
-
-        if (!!firstOp && !!secondOp) {
+        if (firstOp && secondOp) {
             let resultExp = operation(Number(firstOp), Number(secondOp))
                 .toFixed(8)
                 .replace(/[,.]?0+$/, "");
@@ -92,15 +97,27 @@ function App() {
             setResult(resultExp);
             setFirstOp(resultExp);
         }
+        console.log("operation__OP__2:", operation);
+        console.log("firstOp__OP__2:", firstOp);
+        console.log("secondOp__OP__2:", secondOp);
     };
 
-    const handleFixedValue = () => {
-        if (!firstOp && !!result) {
+    const handleOperationUp = () => {
+        console.log("operation__OP__UP:", operation);
+        console.log("firstOp__OP__UP:", firstOp);
+        console.log("secondOp__OP__UP:", secondOp);
+    };
+
+    const handleEqualFixedValue = () => {
+        if (!firstOp && result) {
             setFirstOp(result);
         }
+        console.log("operation__EQUAL__DOWN:", operation);
+        console.log("firstOp__EQUAL__DOWN:", firstOp);
+        console.log("secondOp__EQUAL__DOWN:", secondOp);
     };
 
-    const handleAnswer = () => {
+    const handleEqualAnswer = () => {
         if (firstOp && operation) {
             let resultExp = operation(Number(firstOp), Number(secondOp))
                 .toFixed(8)
@@ -114,6 +131,9 @@ function App() {
             setState(false);
             setFirstOp("");
         }
+        console.log("operation__EQUAL__UP:", operation);
+        console.log("firstOp__EQUAL__UP:", firstOp);
+        console.log("secondOp__EQUAL__UP:", secondOp);
     };
 
     const handleReset = () => {
@@ -130,9 +150,10 @@ function App() {
                 blockOperators={blockOperators}
                 onButtonDown={handleButtonDown}
                 onButtonUp={handleButtonUp}
+                onOperationDown={handleOperationDown}
                 onOperationUp={handleOperationUp}
-                onFixedValue={handleFixedValue}
-                onAnswer={handleAnswer}
+                onFixedValue={handleEqualFixedValue}
+                onAnswer={handleEqualAnswer}
                 onReset={handleReset}
             />
         </div>

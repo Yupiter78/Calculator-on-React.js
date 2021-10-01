@@ -1,11 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Operators = ({ operators, onOperationUp }) => {
+const Operators = ({ operators, onOperationDown, onOperationUp }) => {
     return (
         <>
             {operators.map((operator, i) => (
-                <div key={i} onClick={() => onOperationUp(operator)}>
+                <div
+                    key={i}
+                    onMouseDown={() => onOperationDown(operator)}
+                    onClick={onOperationUp}
+                >
                     {operator}
                 </div>
             ))}
@@ -14,6 +18,7 @@ const Operators = ({ operators, onOperationUp }) => {
 };
 Operators.propTypes = {
     operators: PropTypes.array.isRequired,
+    onOperationDown: PropTypes.func.isRequired,
     onOperationUp: PropTypes.func.isRequired
 };
 export default Operators;
