@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Screen from "./components/screen";
 import AllButtons from "./components/allButtons";
@@ -76,13 +76,17 @@ function App() {
         console.log("firstOp__DISPLAY:", firstOp);
         console.log("secondOp__DISPLAY:", secondOp);
         console.log("operation__DISPLAY:", operation);
+        console.log("______________________________________________");
     };
 
-    const handleOperationDown = (op) => {
+    const handleOperationDown = () => {
+        if (!firstOp && result) {
+            setFirstOp(result);
+        }
+    };
+
+    const handleOperationUp = (op) => {
         if (firstOp) {
-            console.log("operation__OP:", operation);
-            console.log("firstOp__OP:", firstOp);
-            console.log("secondOp__OP:", secondOp);
             setOperation(methods[op]);
             setState(true);
         }
@@ -97,25 +101,40 @@ function App() {
             setResult(resultExp);
             setFirstOp(resultExp);
         }
-        console.log("operation__OP__2:", operation);
-        console.log("firstOp__OP__2:", firstOp);
-        console.log("secondOp__OP__2:", secondOp);
+        // console.log("result__OP__UP:", result);
+        // console.log("operation__OP__UP:", operation);
+        // console.log("firstOp__OP__UP:", firstOp);
+        // console.log("secondOp__OP__UP:", secondOp);
+        // console.log("______________________________________________");
     };
 
-    const handleOperationUp = () => {
-        console.log("operation__OP__UP:", operation);
-        console.log("firstOp__OP__UP:", firstOp);
-        console.log("secondOp__OP__UP:", secondOp);
-    };
+    // useEffect(() => {
+    //     if (firstOp && secondOp) {
+    //         let resultExp = operation(Number(firstOp), Number(secondOp))
+    //             .toFixed(8)
+    //             .replace(/[,.]?0+$/, "");
+    //         if (resultExp.length > 18) {
+    //             resultExp = "ERROR";
+    //         }
+    //         setResult(resultExp);
+    //         setFirstOp(resultExp);
+    //     }
+    // }, [operation]);
 
     const handleEqualFixedValue = () => {
         if (!firstOp && result) {
             setFirstOp(result);
         }
+        console.log("result__EQUAL__DOWN:", result);
         console.log("operation__EQUAL__DOWN:", operation);
         console.log("firstOp__EQUAL__DOWN:", firstOp);
         console.log("secondOp__EQUAL__DOWN:", secondOp);
+        console.log("______________________________________________");
     };
+    useEffect(() => {
+        console.log("firstOp__EQUAL__DOWN___useEffect:", firstOp);
+        console.log("************useEffect*****************");
+    }, [firstOp]);
 
     const handleEqualAnswer = () => {
         if (firstOp && operation) {
@@ -131,10 +150,20 @@ function App() {
             setState(false);
             setFirstOp("");
         }
+        console.log("result__EQUAL__UP:", result);
         console.log("operation__EQUAL__UP:", operation);
         console.log("firstOp__EQUAL__UP:", firstOp);
         console.log("secondOp__EQUAL__UP:", secondOp);
+        console.log("______________________________________________");
     };
+
+    useEffect(() => {
+        console.log("result__useEffect:", result);
+        console.log("operation__useEffect:", operation);
+        console.log("firstOp__useEffect:", firstOp);
+        console.log("secondOp__useEffect:", secondOp);
+        console.log("______________________________________________");
+    }, [result]);
 
     const handleReset = () => {
         setFirstOp("");

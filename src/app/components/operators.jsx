@@ -7,8 +7,8 @@ const Operators = ({ operators, onOperationDown, onOperationUp }) => {
             {operators.map((operator, i) => (
                 <div
                     key={i}
-                    onMouseDown={() => onOperationDown(operator)}
-                    onClick={onOperationUp}
+                    onMouseDown={onOperationDown}
+                    onClick={() => onOperationUp(operator)}
                 >
                     {operator}
                 </div>
