@@ -80,8 +80,9 @@ function App() {
     };
 
     const handleOperationDown = () => {
-        if (!firstOp && result) {
+        if (!firstOp && result && secondOp) {
             setFirstOp(result);
+            setSecondOp("");
         }
     };
 
