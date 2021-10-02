@@ -17,6 +17,10 @@ function App() {
     const [operation, setOperation] = useState(null); // введённый оператор
     const [state, setState] = useState(false); // сосотояние, определяющее в какой из операндов будет записываться вводимые числа
     const [result, setResult] = useState(""); // результат
+    const division = (a, b) => {
+        return a / b;
+    };
+
     const methods = {
         "+": () => {
             setOperation(() => (a, b) => a + b);
@@ -34,7 +38,7 @@ function App() {
             setSecondOp("");
         },
         "/": () => {
-            setOperation(() => (a, b) => a / b);
+            setOperation(() => division);
             setDisplay("/");
             setSecondOp("");
         }
@@ -161,7 +165,17 @@ function App() {
     }, [firstOp]);
 
     const handleEqualAnswer = () => {
-        if (operation?.toString() === "(a, b) => a / b" && secondOp === "0") {
+        console.log("division_____UP:", division);
+        console.log("operation_____UP:", operation);
+        console.log(
+            "operation.toString() === division.toString()_____UP:",
+            operation.toString() === division.toString()
+        );
+        console.log(
+            `operation.toString() === division.toString() && secondOp === "0"`,
+            operation.toString() === division.toString() && secondOp === "0"
+        );
+        if (operation.toString() === division.toString() && secondOp === "0") {
             setDisplay("impossible");
             setState(false);
             setFirstOp("");
