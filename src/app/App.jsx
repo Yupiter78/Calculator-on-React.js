@@ -42,9 +42,22 @@ function App() {
 
     const handleButtonDown = (buttonValue) => {
         console.log("buttonValue:", buttonValue);
+        console.log("display:", display);
+        console.log("result:", result);
+        console.log("display.length:", display.length);
+        console.log(
+            "display.includes(`.`) && buttonValue === `.`:",
+            display.includes(".") && buttonValue === "."
+        );
+        console.log("firstOp__ButtonDown:", firstOp);
         if (display.length > 10) return;
-        if (display.includes(".") && buttonValue === ".") return;
+        if (!firstOp && state === false && result) {
+            buttonValue === "." ? setFirstOp("0.") : setFirstOp(buttonValue);
+        } else {
+            if (display.includes(".") && buttonValue === ".") return;
+        }
         if (state) {
+            console.log("POINT__STATE-TRUE");
             if (!secondOp) {
                 buttonValue === "."
                     ? setSecondOp("0.")
@@ -57,10 +70,12 @@ function App() {
             }
         } else {
             if (!firstOp) {
+                console.log("POINT");
                 buttonValue === "."
                     ? setFirstOp("0.")
                     : setFirstOp(buttonValue);
             } else {
+                console.log("POINT__Else");
                 setFirstOp(firstOp + buttonValue);
             }
         }
